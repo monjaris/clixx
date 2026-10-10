@@ -6,13 +6,10 @@
 #include "helpers/Option.hpp"
 NAMESPACE_BEGIN(clixx)
 
-
-
 // CLIXX
 // basic definitions:
-// options     -> `./prog --option x` || `./prog -o x y z` || `./prog --opt`
-
-
+// values  -> `./prog hello 42`
+// options -> `./prog --option x -a 1 2 3`
 
 
 
