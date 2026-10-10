@@ -287,11 +287,10 @@ public:
             bool subcommand_found = false;
 
             if (Subcmd::Valid(str)) {
-                std::println("subcmd found!");
                 subcommand_found = true;
-                
+                m.subcommands.push_back(parseSubcmd(m.argv, i));
             }
-            if (Option::Valid(str) && !subcommand_found) {
+            else if (Option::Valid(str) && !subcommand_found) {
                 m.options.push_back(parseOption(m.argv, i));
             }
             else {
