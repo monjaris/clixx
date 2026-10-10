@@ -1,5 +1,6 @@
 --- RULES/POLICIES
-add_rules("mode.debug", "mode.release"); set_defaultmode("debug")
+add_rules("mode.debug", "mode.release")
+set_defaultmode("debug")
 add_rules("plugin.compile_commands.autoupdate")
 
 
@@ -10,9 +11,6 @@ add_rules("plugin.compile_commands.autoupdate")
         optimize = "-O0"
         lto = "-fno-lto"
         emit_stack = "-fno-omit-frame-pointer"
-        set_symbols("debug")
-        set_strip("none")
-
         if has_config("pedantic") then
             add_cxxflags("-Wshadow", "-Wundef", "-Wcast-align", "-Wdouble-promotion")
         end
@@ -21,14 +19,9 @@ add_rules("plugin.compile_commands.autoupdate")
         optimize = "-O3"
         lto = "-flto"
         emit_stack = ""
-        set_symbols("none")
-        set_strip("all")
     end
 --- SCRIPT-END
 
-
---- DEPENDENCIES
--- add_requires("", {system = true})
 
 
 --- CONFIG
@@ -53,7 +46,7 @@ end)
 
 --- TARGETS
 target("clixx")
-    set_kind("shared")
+    set_kind("$(kind)")
     add_files("src/*.cpp")
 
 
