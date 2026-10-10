@@ -4,7 +4,7 @@ add_rules("plugin.compile_commands.autoupdate")
 
 
 --- SCRIPT-BEGIN
-    pedantic = {}
+    option("pedantic", {default = true, description = "Toggle-on for pedantic compile flags"})
 
     if is_mode("debug") then
         optimize = "-O0"
@@ -13,10 +13,9 @@ add_rules("plugin.compile_commands.autoupdate")
         set_symbols("debug")
         set_strip("none")
 
-        if is_plat("linux") then
+        if has_config("pedantic") then
             add_cxxflags("-Wshadow", "-Wundef", "-Wcast-align", "-Wdouble-promotion")
         end
-
 
     elseif is_mode("release") then
         optimize = "-O3"
@@ -36,8 +35,7 @@ add_rules("plugin.compile_commands.autoupdate")
 cxx_flags = {
     "-Wall", "-Wextra",
     "-fno-exceptions", "-fno-rtti",
-    optimize, table.unpack(pedantic),
-    lto, emit_stack,
+    optimize, lto, emit_stack,
 }
 ld_flags = {
     lto

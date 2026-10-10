@@ -15,8 +15,8 @@ int main(int argc, char** argv)
         }
     }
 
-    std::println("\n\n [[ Subcommands ]] ");
-    cli.printSubcmds();
+    std::println("\n\n [[ Values ]] ");
+    cli.printValues();
     std::println("\n\n [[ Options ]] ");
     cli.printOptions();
     std::println("\n\n [[ Orphans ]] ");

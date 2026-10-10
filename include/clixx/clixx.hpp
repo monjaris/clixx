@@ -1,9 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
 #include <print>
-#include "Option.hpp"
-#include "Subcmd.hpp"
+#include "core/defines.hpp"
+#include "core/utils.hpp"
+#include "helpers/Value.hpp"
+#include "helpers/Option.hpp"
 NAMESPACE_BEGIN(clixx)
 
 
@@ -11,18 +11,20 @@ NAMESPACE_BEGIN(clixx)
 // CLIXX
 // basic definitions:
 // options     -> `./prog --option x` || `./prog -o x y z` || `./prog --opt`
-// subcommands -> `./prog subcmd --option x -o x y z`
+
+
 
 
 
 class CLI
 {
     struct M {
-        char** argv = nullptr;
         int argc = -1;
+        char** argv = nullptr;
         std::vector<std::string> data;
+
+        std::vector<Value> values;
         std::vector<Option> options;
-        std::vector<Subcmd> subcommands;
         std::vector<std::string> orphans;
     } m;
 
@@ -45,6 +47,7 @@ public:
         m.argv = argv;
 
         m.data = {argv, argv + argc};
+
         m.options.reserve(128);
     }
 
@@ -54,21 +57,30 @@ public:
     }
 
 
+    void printValues() {
+        for (const auto& val : m.values) {
+            std::println("{}", val.repr());
+        }
+    }
+
     void printOptions() {
         for (const auto& option : m.options) {
-            std::println("{}", option.fmt());
+            std::print("{}: ", option.name());
+
+            for (usize i=0;  i < option.values().size();  ++i) {
+                std::print(
+                    "{}", option.values()[i].repr(i != option.values().size()-1)
+                );
+            }
+
+            std::println();
         }
     }
-    void printSubcmds() {
-        for (const auto& subcmd : m.subcommands) {
-            std::println("{}", subcmd.fmt());
-        }
-    }
+
     void printOrphans() {
         for (const auto& orp : m.orphans) {
-            std::print("{}; ", orp);
+            std::println("{}", orp);
         }
-        std::println();
     }
 
 
@@ -76,58 +88,16 @@ public:
         return m.options;
     }
 
-    const std::vector<Subcmd>& subcommands() {
-        return m.subcommands;
-    }
-
-
-    Option parseOption(char** argv, int& idx) {
-        Option option = {argv[idx], {}};
-        ++idx;
-
-        for (;  idx < m.argc;  ++idx) {
-            const auto& maybe_arg = m.data[idx];
-
-            // found next option, yield
-            if (Option::Valid(maybe_arg)) {
-                --idx; break;
-            }
-
-            option.pushValue(Value(maybe_arg));
-        }
-
-        return option;
-    }
-
-    Subcmd parseSubcmd(char** argv, int& idx) {
-        Subcmd subcmd = {argv[idx], {}};
-        ++idx;
-
-        for (;  idx < m.argc;  ++idx) {
-            const auto& maybe_arg = m.data[idx];
-
-            // found next subcommand, yield
-            if (Subcmd::Valid(maybe_arg)) {
-                --idx; break;
-            }
-        }
-
-        return subcmd;
-    }
-
 
     [[nodiscard]] bool parse() {
         for (int i=1;  i < m.argc;  ++i) {
-            auto& str = m.data[i];
+            std::string& str = m.data[i];
 
-            bool subcommand_found = false;
-
-            if (Subcmd::Valid(str)) {
-                subcommand_found = true;
-                m.subcommands.push_back(parseSubcmd(m.argv, i));
+            if (Option::Valid(str)) {
+                m.options.push_back(Option::parse(m.argc, m.argv, i));
             }
-            else if (Option::Valid(str) && !subcommand_found) {
-                m.options.push_back(parseOption(m.argv, i));
+            else if (Value::Valid(str)) {
+                m.values.push_back(Value(str));
             }
             else {
                 m.orphans.push_back(str);
@@ -137,6 +107,7 @@ public:
         return true;
     }
 };
+
 
 
 

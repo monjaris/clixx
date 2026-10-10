@@ -1,27 +1,36 @@
 #pragma once
 #include <vector>
-#include <format>
-#include "core/defines.hpp"
-#include "core/utils.hpp"
+#include "clixx/core/utils.hpp"
 #include "Value.hpp"
 NAMESPACE_BEGIN(clixx)
 
-class [[nodiscard]] Option
+
+class Option
 {
     std::string m_name;
     std::vector<Value> m_values;
 
 public:
-    constexpr Option(const char* name, std::vector<Value> args)
-        : m_name(Valid(name)? name : "INVALID_OPTION"), m_values(args)
-    {}
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wuninitialized"
+    constexpr Option(const char* name, std::vector<Value> values)
+        : m_values(values)
+    {
+        if (!Valid(name)) {
+            m_name = {};
+        } else {
+            m_name = name;
+        }
+    }
+#pragma GCC diagnostic pop
 
-    static constexpr bool Valid(const std::string& str) {
+    static constexpr bool Valid(std::string str) {
         bool is = false;
 
         if (str.empty()) return false;
+        char c = '-';
 
-        if (str.starts_with("-") && not_at('-', str, 1) && str.size() == 2) {
+        if (str.starts_with("-") && not_at(c, str, 1) && str.size() == 2) {
             is = true;
         }
 
@@ -61,14 +70,23 @@ public:
         return *this;
     }
 
-    std::string fmt() const {
-        std::string formatted = std::format("{}\n", name());
 
-        for (auto& val : m_values) {
-            formatted.append(std::format("  {}\n", val.str()));
+    static Option parse(int argc, char** argv, int& idx) {
+        Option option = {argv[idx], {}};
+        ++idx;
+
+        for (;  idx < argc;  ++idx) {
+            const auto& maybe_arg = argv[idx];
+
+            // found next option, yield
+            if (Option::Valid(maybe_arg)) {
+                --idx; break;
+            }
+
+            option.pushValue(Value(maybe_arg));
         }
 
-        return formatted;
+        return option;
     }
 };
 
