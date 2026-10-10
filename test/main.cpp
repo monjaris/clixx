@@ -1,4 +1,4 @@
-#include "clixx/cli.hpp"
+#include "clixx/clixx.hpp"
 
 int main(int argc, char** argv)
 {
