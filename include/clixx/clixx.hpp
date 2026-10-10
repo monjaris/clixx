@@ -93,7 +93,7 @@ public:
                 --idx; break;
             }
 
-            option.pushArg(maybe_arg);
+            option.pushValue(Value(maybe_arg));
         }
 
         return option;
@@ -101,12 +101,15 @@ public:
 
     Subcmd parseSubcmd(char** argv, int& idx) {
         Subcmd subcmd = {argv[idx], {}};
+        ++idx;
 
         for (;  idx < m.argc;  ++idx) {
             const auto& maybe_arg = m.data[idx];
 
             // found next subcommand, yield
-            if (Subcmd::Valid(maybe_arg)) break;
+            if (Subcmd::Valid(maybe_arg)) {
+                --idx; break;
+            }
         }
 
         return subcmd;

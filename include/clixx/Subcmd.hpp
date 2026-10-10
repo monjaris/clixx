@@ -41,7 +41,7 @@ public:
     }
 
     std::string fmt() const {
-        static std::string formatted = std::format("{}\n", name());
+        std::string formatted = std::format("{}\n", name());
 
         for (auto& opt : m_options) {
             formatted.append(std::format("  {}\n", opt.fmt()));
