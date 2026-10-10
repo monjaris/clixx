@@ -31,7 +31,7 @@ template<class T>
 using FetchValueT = decltype(getValue<T>())::type;
 
 
-template<class ContainerT>
+template<class ContainerT> [[nodiscard]]
 bool not_at(FetchValueT<ContainerT> value, ContainerT cont, usize idx) {
     if (idx > cont.size()) return false;
 
@@ -39,24 +39,16 @@ bool not_at(FetchValueT<ContainerT> value, ContainerT cont, usize idx) {
 }
 
 
-class Option
+
+class [[nodiscard]] Option
 {
     std::string m_name;
     std::vector<std::string> m_args;
 
 public:
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wuninitialized"
     constexpr Option(const char* name, std::vector<std::string> args)
-        : m_args(args)
-    {
-        if (!Valid(name)) {
-            m_name = {};
-        } else {
-            m_name = name;
-        }
-    }
-#pragma GCC diagnostic pop
+        : m_name(Valid(name)? name : "INVALID_OPTION"), m_args(args)
+    {}
 
     static constexpr bool Valid(const std::string& str) {
         bool is = false;
@@ -103,6 +95,11 @@ public:
         return *this;
     }
 
+    std::string fmt() const {
+        std::string formatted = std::format("{} {}", m_name, m_args);
+        return formatted;
+    }
+
 
     template<class ParseT> std::optional<ParseT> parse() {
         static_assert(false, "Parsing provided type is not supported");
@@ -135,12 +132,64 @@ public:
 
 
 
+class Subcmd
+{
+    std::string m_name;
+    std::vector<Option> m_options;
+
+public:
+    constexpr Subcmd(const char* name, std::vector<Option> options)
+        : m_name(Valid(name)? name : "INVALID_SUBCOMMAND"), m_options(options)
+    {}
+
+    static constexpr bool Valid(const std::string& str) {
+        bool is = true;
+
+        if (str.empty()) return false;
+
+        if (Option::Valid(str)) is = false;
+
+        return is;
+    }
+
+    const std::string& name() const {
+        return m_name;
+    }
+
+    constexpr usize count() const {
+        return m_options.size();
+    }
+
+    std::optional<Option> get(usize i) const {
+        if (i > count()-1) {
+            return std::nullopt;
+        } else {
+            return m_options[i];
+        }
+    }
+
+    std::string fmt() const {
+        static std::string formatted = std::format("{}\n", name());
+
+        for (auto& opt : m_options) {
+            formatted.append(std::format("  {}\n", opt.fmt()));
+        }
+
+        return formatted;
+    }
+};
+
+
+
+
 class CLI
 {
     struct M {
+        char** argv = nullptr;
         int argc = -1;
         std::vector<std::string> data;
         std::vector<Option> options;
+        std::vector<Subcmd> subcommands;
         std::vector<std::string> orphans;
     } m;
 
@@ -160,8 +209,9 @@ public:
     CLI (int argc, char** argv)
     {
         m.argc = argc;
-        m.data = {argv, argv + argc};
+        m.argv = argv;
 
+        m.data = {argv, argv + argc};
         m.options.reserve(128);
     }
 
@@ -173,31 +223,76 @@ public:
 
     void printOptions() {
         for (const auto& option : m.options) {
-            std::println("{}: {}", option.name(), option.args());
+            std::println("{}", option.fmt());
         }
     }
+    void printSubcmds() {
+        for (const auto& subcmd : m.subcommands) {
+            std::println("{}", subcmd.fmt());
+        }
+    }
+    void printOrphans() {
+        for (const auto& orp : m.orphans) {
+            std::print("{}; ", orp);
+        }
+        std::println();
+    }
+
 
     const std::vector<Option>& options() {
         return m.options;
     }
 
+    const std::vector<Subcmd>& subcommands() {
+        return m.subcommands;
+    }
+
+
+    Option parseOption(char** argv, int& idx) {
+        Option option = {argv[idx], {}};
+        ++idx;
+
+        for (;  idx < m.argc;  ++idx) {
+            const auto& maybe_arg = m.data[idx];
+
+            // found next option, yield
+            if (Option::Valid(maybe_arg)) {
+                --idx; break;
+            }
+
+            option.pushArg(maybe_arg);
+        }
+
+        return option;
+    }
+
+    Subcmd parseSubcmd(char** argv, int& idx) {
+        Subcmd subcmd = {argv[idx], {}};
+
+        for (;  idx < m.argc;  ++idx) {
+            const auto& maybe_arg = m.data[idx];
+
+            // found next subcommand, yield
+            if (Subcmd::Valid(maybe_arg)) break;
+        }
+
+        return subcmd;
+    }
+
 
     [[nodiscard]] bool parse() {
         for (int i=1;  i < m.argc;  ++i) {
-            std::string& str = m.data[i];
+            auto& str = m.data[i];
 
-            if (Option::Valid(str)) {
-                Option option = {str.c_str(), {}};
+            bool subcommand_found = false;
 
-                for (int j=i + 1;  j < m.argc;  ++j) {
-                    const auto& maybe_arg = m.data[j];
-
-                    if (Option::Valid(maybe_arg)) break;
-
-                    option.pushArg(maybe_arg);
-                }
-
-                m.options.push_back(option);
+            if (Subcmd::Valid(str)) {
+                std::println("subcmd found!");
+                subcommand_found = true;
+                
+            }
+            if (Option::Valid(str) && !subcommand_found) {
+                m.options.push_back(parseOption(m.argv, i));
             }
             else {
                 m.orphans.push_back(str);
