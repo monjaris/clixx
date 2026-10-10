@@ -1,0 +1,23 @@
+# Client
+.DS_Store
+
+# Build System
+/.xmake/
+/build/
+
+# Binaries
+/*.so
+/*.a
+/*.o
+/*.release
+/*.debug
+/clixx
+/main
+
+# Scripts
+/run.sh
+
+# Editors & LSP
+/.zed/
+/.vscode/
+/compile_commands.json
