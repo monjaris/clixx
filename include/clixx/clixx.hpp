@@ -60,14 +60,6 @@ public:
     void printInfo(bool values = true, bool options = true, bool orphans = true) {
         std::println("\n\n----------- CLIXX CLI INFO -----------\n");
 
-        auto longestNamedValue = [this]() {
-            usize longest_length = 0;
-            for (usize i=0;  i < m.values.size();  ++i) {
-                longest_length = util::max(longest_length, m.values[i].str().size());
-            }
-            return longest_length;
-        };
-
         auto longestNamedOption = [this]() {
             usize longest_length = 0;
             for (usize i=0;  i < m.options.size();  ++i) {
