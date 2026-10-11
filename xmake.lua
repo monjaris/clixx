@@ -5,20 +5,17 @@ add_rules("plugin.compile_commands.autoupdate")
 
 
 --- SCRIPT-BEGIN
+    ---@diagnostic disable-next-line -- because lsp is not always correct..
     option("pedantic", {default = true, description = "Toggle-on for pedantic compile flags"})
 
     if is_mode("debug") then
-        optimize = "-O0"
-        lto = "-fno-lto"
-        emit_stack = "-fno-omit-frame-pointer"
+        add_cxxflags("-O0", "-fno-lto", "-fno-omit-frame-pointer")
         if has_config("pedantic") then
             add_cxxflags("-Wshadow", "-Wundef", "-Wcast-align", "-Wdouble-promotion")
         end
 
     elseif is_mode("release") then
-        optimize = "-O3"
-        lto = "-flto"
-        emit_stack = ""
+        add_cxxflags("-O3", "-flto")
     end
 --- SCRIPT-END
 
@@ -28,10 +25,9 @@ add_rules("plugin.compile_commands.autoupdate")
 cxx_flags = {
     "-Wall", "-Wextra",
     "-fno-exceptions", "-fno-rtti",
-    optimize, lto, emit_stack,
 }
 ld_flags = {
-    lto
+    ""
 }
 set_languages("c++23")
 add_includedirs("include/")
@@ -50,5 +46,6 @@ target("clixx")
     add_files("src/*.cpp")
 
 
---- TEST-TARGETS
+--- TESTS
 target("main") add_files("test/main.cpp") add_deps("clixx")
+target("option_methods") add_files("test/option_methods.cpp") add_deps("clixx")

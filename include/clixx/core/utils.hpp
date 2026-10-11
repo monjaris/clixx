@@ -1,7 +1,7 @@
 #pragma once
 #include "defines.hpp"
 NAMESPACE_BEGIN(clixx)
-inline NAMESPACE_BEGIN(util)
+NAMESPACE_BEGIN(util)
 
 template<class T>
 struct TypeIdentity { using Type = T; };
@@ -31,6 +31,18 @@ template<class ContainerT> [[nodiscard]]
 bool not_at(ValueTypeOf<ContainerT> value, ContainerT cont, usize idx) {
     if (idx > cont.size()) return false;
     return cont[idx] != value;
+}
+
+
+usize cstrLen(const char* cstr) {
+    usize len = 0;
+    while (*cstr++) ++len;
+    return len;
+}
+
+
+usize max(usize x, usize y) {
+    return (x > y)? (x):(y);
 }
 
 

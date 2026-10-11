@@ -58,11 +58,16 @@ template<class T, class U> inline constexpr bool is_same = false;
 template<class T> inline constexpr bool is_same<T, T> = true;
 template<class T, class U> concept IdConcept = is_same<T, U>;
 
-
-// check if T and U are same type (variadic)
+// check if T and U... are same type (variadic)
 template<class T, class... U> inline constexpr bool is_any_same = (is_same<T, U> || ...);
 template<class T, class... U>
-concept IdsConcept = is_any_same<T, U...>;
+concept AnyIdConcept = is_any_same<T, U...>;
+
+// check if T and all of U... are same type (variadic)
+template<class T, class... U> inline constexpr bool is_all_same = (is_same<T, U> && ...);
+template<class T, class... U>
+concept AllIdConcept = is_all_same<T, U...>;
+
 
 
 // get underlying type via compiler instrinct
