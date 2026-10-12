@@ -28,20 +28,20 @@ using ValueTypeOf = decltype(getIdentity<T>())::Type;
 // @returns true if `value` is not equal to `cont[idx]`
 // @safety performs a bound check
 template<class ContainerT> [[nodiscard]]
-bool not_at(ValueTypeOf<ContainerT> value, ContainerT cont, usize idx) {
+constexpr bool not_at(ValueTypeOf<ContainerT> value, ContainerT cont, usize idx) {
     if (idx > cont.size()) return false;
     return cont[idx] != value;
 }
 
 
-usize cstrLen(const char* cstr) {
+[[nodiscard]] constexpr usize cstrLen(const char* cstr) {
     usize len = 0;
     while (*cstr++) ++len;
     return len;
 }
 
 
-usize max(usize x, usize y) {
+[[nodiscard]] constexpr usize max(usize x, usize y) {
     return (x > y)? (x):(y);
 }
 
