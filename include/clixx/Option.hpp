@@ -21,7 +21,7 @@ class Option
     std::string m_name;
     std::vector<Value> m_values;
 
-    static bool Valid(std::string str);
+    static bool Valid(const std::string& str);
     Option& pushValue(Value arg);
 
 public:
@@ -86,7 +86,7 @@ public:
     usize count() const;
 
     // parse all options after `idx` at `argv` with the max length of `argc`
-    static Option parse(int argc, char** argv, int& idx);
+    static Option Parse(int argc, char** argv, int& idx);
 };
 
 

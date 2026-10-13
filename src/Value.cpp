@@ -2,7 +2,7 @@
 #include "clixx/Value.hpp"
 NAMESPACE_BEGIN(clixx)
 
-Value::Value(std::string value)
+Value::Value(const char* value)
     : m_value(std::move(value))
 {}
 
@@ -17,13 +17,13 @@ const std::string& Value::str() const {
 }
 
 
-bool Value::Valid(const std::string& str) {
-    return !str.empty();
+bool Value::Valid(const char* str) {
+    return str != nullptr;
 }
 
 
 std::string Value::repr(bool post_comma) const {
-    return std::format("{}{} ", m_value, post_comma ? "," : "");
+    return m_value + (post_comma? ", " : "");
 }
 
 

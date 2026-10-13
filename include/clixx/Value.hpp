@@ -8,12 +8,12 @@ class [[nodiscard]] Value
     std::string m_value;
 
 public:
-    explicit Value(std::string value);
+    explicit Value(const char* value);
 
     std::string& str();
     const std::string& str() const;
 
-    static bool Valid(const std::string& str);
+    static bool Valid(const char* str);
 
     std::string repr(bool post_comma = false) const;
 };

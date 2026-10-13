@@ -1,3 +1,4 @@
+#include <print>
 #include "clixx/clixx.hpp"
 
 int main(int argc, char** argv)

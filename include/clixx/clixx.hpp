@@ -1,52 +1,28 @@
 #pragma once
-#include <print>
 #include "core/defines.hpp"
 #include "core/utils.hpp"
 #include "Value.hpp"
 #include "Option.hpp"
+#include "CLI.hpp"
 NAMESPACE_BEGIN(clixx)
 
 
-// CLIXX
-// basic definitions:
-// values  -> `./prog hello foo 42`
-// options -> `./prog --option value1 -o value1 value2`
-
-
-
+// exit with an error message and optionally custom exit code
 [[maybe_unused, noreturn]]
 void exitWith(const char* msg, int exit_code = 0);
 
+// exit with an error message and optionally custom exit code
+[[maybe_unused, noreturn]]
+void abortWith(const char* msg);
 
-class CLI
-{
-    struct M {
-        int argc = -1;
-        char** argv = nullptr;
-        std::vector<std::string> data;
 
-        std::vector<Value> values;
-        std::vector<Option> options;
-        std::vector<std::string> orphans;
-    } m;
+// write a message to `stdout` (unbuffered)
+[[maybe_unused]]
+void print(const char* msg);
 
-public:
-    class ParseResult {
-        bool m_result = true;
-    public:
-        explicit ParseResult(bool success);
-        bool failed();
-    };
-
-    CLI(int argc, char** argv);
-
-    void printInfo(bool values = true, bool options = true, bool orphans = true);
-
-    const std::vector<Value>& values() const;
-    const std::vector<Option>& options() const;
-
-    ParseResult parse();
-};
+// write a message to `stderr` (unbuffered)
+[[maybe_unused]]
+void eprint(const char* msg);
 
 
 NAMESPACE_END()

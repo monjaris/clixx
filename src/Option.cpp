@@ -2,7 +2,7 @@
 NAMESPACE_BEGIN(clixx)
 
 
-bool Option::Valid(std::string str) {
+bool Option::Valid(const std::string& str) {
     bool is = false;
 
     if (str.empty()) return false;
@@ -70,7 +70,7 @@ usize Option::count() const {
 }
 
 
-Option Option::parse(int argc, char** argv, int& idx) {
+Option Option::Parse(int argc, char** argv, int& idx) {
     Option option = {argv[idx], {}};
     ++idx;
 
