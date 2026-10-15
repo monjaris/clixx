@@ -23,12 +23,6 @@ extern "C" {
 #define CYAN "36;"
 
 
-// #define TEST_INIT() printf(ESC(BOLD CYAN) \
-//     "\n[ TEST: \"%s\" ]" \
-//     ESC(RESET) \
-//     "\n\n", __FILE__ \
-// );
-
 #define TEST_MAIN(...) \
     int main(__VA_ARGS__)
 
