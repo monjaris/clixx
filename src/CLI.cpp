@@ -10,8 +10,8 @@ CLI::ParseResult::ParseResult(bool success)
 {}
 
 
-bool CLI::ParseResult::failed() { 
-    return m_result == false; 
+bool CLI::ParseResult::failed() {
+    return m_result == false;
 }
 
 
@@ -40,7 +40,7 @@ const std::vector<Option>& CLI::options() const {
 }
 
 
-CLI::ParseResult CLI::parse() {
+bool CLI::parse() {
     for (int i = 1; i < m.argc; ++i) {
         const char* const str = m.argv[i];
 
@@ -55,9 +55,25 @@ CLI::ParseResult CLI::parse() {
         }
     }
 
-    return ParseResult(true);
+    return true;
 }
 
+
+
+std::string CLI::repr() const {
+    std::string repr;  repr.reserve(256);
+
+    Option freestanding_values = {m.argv[0], m.values, true};
+    repr += freestanding_values.repr();
+
+    repr += ",\n";
+
+    for (usize i=0;  i < m.options.size();  ++i) {
+        repr.append( std::format("{}, ", m.options[i].repr()) );
+    }
+
+    return repr;
+}
 
 
 void CLI::printInfo(bool values, bool options, bool orphans) {

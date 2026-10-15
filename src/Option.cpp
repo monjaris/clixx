@@ -1,3 +1,4 @@
+#include <format>
 #include "clixx/Option.hpp"
 NAMESPACE_BEGIN(clixx)
 
@@ -21,52 +22,63 @@ bool Option::Valid(const std::string& str) {
 
 
 Option& Option::pushValue(Value arg) {
-    m_values.push_back(arg);
+    m.values.push_back(arg);
     return *this;
 }
 
 
-Option::Option(const char* name, std::vector<Value> values)
-    : m_values(values)
-{
-    if (!Valid(name)) {
-        m_name = {};
-    } else {
-        m_name = name;
-    }
-}
+Option::Option(const char* name, std::vector<Value> values, bool force_name)
+    : m({
+        .name = (force_name? (name) : (Valid(name)? name : "<invalid-option-name>")),
+        .values = values
+    })
+{}
 
 
 const std::string& Option::name() const {
-    return m_name;
+    return m.name;
 }
 
 
 bool Option::is(const char* str) const {
-    return m_name == str;
+    return m.name == str;
 }
 
 
 bool Option::is(const char* short_opt, const char* long_opt) const {
-    return m_name == short_opt || m_name == long_opt;
+    return m.name == short_opt || m.name == long_opt;
 }
 
 
 bool Option::is(std::vector<const char*> any_of_str) const {
     for (usize i = 0; i < any_of_str.size(); ++i) {
-        if (m_name == any_of_str[i]) return true;
+        if (m.name == any_of_str[i]) return true;
     }
     return false;
 }
 
 
 auto Option::values() const -> const std::vector<Value>& {
-    return m_values;
+    return m.values;
+}
+
+
+auto Option::valuesAsStrings() const -> std::vector<std::string> {
+    std::vector<std::string> value_strings;
+    value_strings.reserve(m.values.size());
+
+    for (usize i=0;  i < m.values.size();  ++i) value_strings.push_back(m.values[i].str());
+    return value_strings;
+}
+
+
+std::string Option::repr() const {
+    return std::format("{} : {}", m.name, this->valuesAsStrings());
 }
 
 
 usize Option::count() const {
-    return m_values.size();
+    return m.values.size();
 }
 
 

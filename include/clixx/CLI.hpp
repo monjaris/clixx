@@ -39,8 +39,9 @@ public:
     const char* const* argv() const;
     const std::vector<Value>& values() const;
     const std::vector<Option>& options() const;
+    std::string repr() const;
 
-    ParseResult parse();
+    bool parse();
 };
 
 
