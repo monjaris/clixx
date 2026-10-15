@@ -1,5 +1,5 @@
 #pragma once
-namespace {
+namespace clixx {
     #include "types.hpp"
     using namespace types;
 }
