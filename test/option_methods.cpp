@@ -1,8 +1,26 @@
+#include <print>
+#include "include/test.hpp"
 #include "clixx/clixx.hpp"
 
-int main()
+TEST_MAIN()
 {
-    "Too lazy to implement this test file"
-    "May someone contribute"
-    ;
+    using clixx::Value;
+    using clixx::Option;
+
+    clixx::Option option = {"--opt", { Value("2334"), Value("hello") }};
+
+    if (option.is("--opt"))
+    {
+        std::println("[[ OPTION ]]");
+        std::println("opt-name:      {}", option.name());
+        std::println("repr-fmt:  {}", option.repr());
+        std::println("arg-count: {}", option.count());
+        std::println("first-arg: {}", option.get(0)->str());
+    }
+    else
+    {
+        TEST_QUIT(TEST_QUIT_ERR);
+    }
+
+    TEST_QUIT(TEST_QUIT_OK);
 }

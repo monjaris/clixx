@@ -1,11 +1,12 @@
 #include <print>
+#include "include/test.hpp"
 #include "clixx/clixx.hpp"
 
-int main(int argc, char** argv)
+TEST_MAIN(int argc, char** argv)
 {
     clixx::CLI cli = {argc, argv};
 
-    if (cli.parse().failed()) {
+    if (!cli.parse()) {
         clixx::exitWith("Failed to parse command line");
     }
 
@@ -16,5 +17,8 @@ int main(int argc, char** argv)
         }
     }
 
+    std::println("{}", cli.repr());
     cli.printInfo();
+
+    TEST_QUIT(TEST_QUIT_OK);
 }
