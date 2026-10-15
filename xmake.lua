@@ -13,7 +13,7 @@ add_rules("plugin.compile_commands.autoupdate")
             add_cxxflags("-Wshadow", "-Wundef", "-Wcast-align", "-Wdouble-promotion")
         end
     else
-        add_rules("build.optimization.lto")
+        set_policy("build.optimization.lto", true)
     end
 --- SCRIPT-END
 
