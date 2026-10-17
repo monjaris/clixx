@@ -20,7 +20,7 @@ add_rules("plugin.compile_commands.autoupdate")
 
 
 --- CONFIG
-add_includedirs("include/")
+add_includedirs("include/", {public = true})
 add_cxxflags(table.unpack({
     "-std=c++23",
     "-Wall", "-Wextra",

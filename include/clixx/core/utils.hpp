@@ -3,8 +3,25 @@
 NAMESPACE_BEGIN(clixx)
 NAMESPACE_BEGIN(util)
 
+
 template<class T>
 struct TypeIdentity { using Type = T; };
+
+
+template<class T>
+class Ref
+{
+    T* m_ptr = nullptr;
+
+public:
+    explicit Ref(const T& ref)
+        : m_ptr(ADDRESS_OF(ref))
+    {}
+
+    T& operator-> () {
+        return *m_ptr;
+    }
+};
 
 
 template<class T>
