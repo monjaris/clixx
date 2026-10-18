@@ -4,6 +4,6 @@ namespace clixx {
     using namespace types;
 }
 
-#define NAMESPACE_BEGIN($NAME) namespace $NAME {
-#define NAMESPACE_END() }
+#define CLIIXX_NAMESPACE_BEGIN() namespace clixx {
+#define CLIXX_NAMESPACE_END() }
 

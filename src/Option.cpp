@@ -1,6 +1,6 @@
 #include <format>
 #include "clixx/Option.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 bool Option::Valid(const std::string& str) {
@@ -102,4 +102,4 @@ Option Option::Parse(int argc, char** argv, int& idx) {
 }
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

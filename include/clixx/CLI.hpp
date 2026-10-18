@@ -3,7 +3,7 @@
 #include "core/utils.hpp"
 #include "Value.hpp"
 #include "Option.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 // CLIXX
@@ -47,4 +47,4 @@ public:
 };
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

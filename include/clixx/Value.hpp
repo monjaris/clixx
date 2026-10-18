@@ -1,7 +1,7 @@
 #pragma once
 #include "clixx/core/defines.hpp"
 #include <string>
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 class [[nodiscard]] Value
 {
@@ -21,4 +21,4 @@ public:
     std::string repr(bool post_comma = false) const;
 };
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

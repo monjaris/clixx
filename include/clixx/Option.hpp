@@ -3,7 +3,7 @@
 #include <optional>
 #include "clixx/core/utils.hpp"
 #include "Value.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 // For library to remain small, i added feature macros so devs can opt-in:
@@ -111,4 +111,4 @@ public:
 };
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

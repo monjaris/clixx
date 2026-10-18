@@ -1,5 +1,5 @@
 #include "clixx/clixx.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 // CLIXX
@@ -31,4 +31,4 @@ void eprint(const char* err_msg) {
 }
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

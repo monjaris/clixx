@@ -4,7 +4,7 @@
 #include "Value.hpp"
 #include "Option.hpp"
 #include "CLI.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 // exit with an error message and optionally custom exit code
@@ -25,4 +25,4 @@ void print(const char* msg);
 void eprint(const char* msg);
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

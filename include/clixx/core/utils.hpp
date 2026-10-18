@@ -1,7 +1,7 @@
 #pragma once
 #include "defines.hpp"
-NAMESPACE_BEGIN(clixx)
-NAMESPACE_BEGIN(util)
+CLIIXX_NAMESPACE_BEGIN()
+namespace util {
 
 
 template<class T>
@@ -63,5 +63,5 @@ constexpr bool not_at(ValueTypeOf<ContainerT> value, ContainerT cont, usize idx)
 }
 
 
-NAMESPACE_END()
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()
+CLIXX_NAMESPACE_END()

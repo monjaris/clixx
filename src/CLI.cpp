@@ -1,6 +1,6 @@
 #include <print>
 #include "clixx/CLI.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 
 
@@ -138,4 +138,4 @@ void CLI::printInfo(bool values, bool options, bool orphans) {
 }
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()

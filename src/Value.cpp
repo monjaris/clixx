@@ -1,6 +1,6 @@
 #include <format>
 #include "clixx/Value.hpp"
-NAMESPACE_BEGIN(clixx)
+CLIIXX_NAMESPACE_BEGIN()
 
 Value::Value(const char* value)
     : m_default(value), m_value(value)
@@ -22,4 +22,4 @@ std::string Value::repr(bool post_comma) const {
 }
 
 
-NAMESPACE_END()
+CLIXX_NAMESPACE_END()
