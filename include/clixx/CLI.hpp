@@ -16,7 +16,7 @@ NAMESPACE_BEGIN(clixx)
 class CLI
 {
     struct M {
-        int argc = -1;
+        int32 argc = -1;
         char** argv = nullptr;
 
         std::vector<Value> values;
@@ -36,7 +36,9 @@ public:
 
     void printInfo(bool values = true, bool options = true, bool orphans = true);
 
+    int32 argc() const;
     const char* const* argv() const;
+
     const std::vector<Value>& values() const;
     const std::vector<Option>& options() const;
     std::string repr() const;

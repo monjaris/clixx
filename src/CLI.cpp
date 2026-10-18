@@ -24,6 +24,10 @@ CLI::CLI(int argc, char** argv) {
 }
 
 
+int32 CLI::argc() const {
+    return m.argc;
+}
+
 
 const char* const* CLI::argv() const {
     return m.argv;
