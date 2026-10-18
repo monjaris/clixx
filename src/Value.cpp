@@ -3,22 +3,17 @@
 NAMESPACE_BEGIN(clixx)
 
 Value::Value(const char* value)
-    : m_value(std::move(value))
+    : m_default(value), m_value(value)
 {}
 
 
-std::string& Value::str() {
+const std::string& Value::val() const {
     return m_value;
 }
 
 
-const std::string& Value::str() const {
+const std::string& Value::defaultVal() const {
     return m_value;
-}
-
-
-bool Value::Valid(const char* str) {
-    return str != nullptr;
 }
 
 

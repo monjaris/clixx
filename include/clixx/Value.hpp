@@ -5,16 +5,19 @@ NAMESPACE_BEGIN(clixx)
 
 class [[nodiscard]] Value
 {
+    std::string m_default;
     std::string m_value;
 
 public:
-    explicit Value(const char* value);
+    Value(const char* value);
 
-    std::string& str();
-    const std::string& str() const;
+    // get string value of the value
+    const std::string& val() const;
 
-    static bool Valid(const char* str);
+    // get the default string value(set at construction)
+    const std::string& defaultVal() const;
 
+    // generate string represantation of the value
     std::string repr(bool post_comma = false) const;
 };
 

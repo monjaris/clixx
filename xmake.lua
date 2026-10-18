@@ -37,6 +37,7 @@ end)
 target("clixx")
     set_kind("$(kind)")
     add_files("src/*.cpp")
+    add_headerfiles("include/(clixx/**.hpp)")
 
     if is_kind("static") then
         after_build(function (target)

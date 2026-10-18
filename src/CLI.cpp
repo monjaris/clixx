@@ -47,7 +47,7 @@ bool CLI::parse() {
         if (Option::Valid(str)) {
             m.options.push_back(Option::Parse(m.argc, m.argv, i));
         }
-        else if (Value::Valid(str)) {
+        else if (true) {
             m.values.push_back(Value(str));
         }
         else {
