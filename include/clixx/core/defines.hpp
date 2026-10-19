@@ -6,4 +6,3 @@ namespace clixx {
 
 #define CLIIXX_NAMESPACE_BEGIN() namespace clixx {
 #define CLIXX_NAMESPACE_END() }
-

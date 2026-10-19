@@ -4,17 +4,6 @@ CLIIXX_NAMESPACE_BEGIN()
 
 
 
-// CLI::ParseResult implementation
-CLI::ParseResult::ParseResult(bool success) 
-    : m_result(success) 
-{}
-
-
-bool CLI::ParseResult::failed() {
-    return m_result == false;
-}
-
-
 // CLI implementation
 CLI::CLI(int argc, char** argv) {
     m.argc = argc;

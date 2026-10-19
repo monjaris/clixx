@@ -9,16 +9,22 @@ CLIIXX_NAMESPACE_BEGIN()
 // For library to remain small, i added feature macros so devs can opt-in:
 //
 // CLIXX_OPTION_OPERATORS
-    // you get operator overloads for Option class such as opt("-o", "--opt") and opt[1]
+// you get operator overloads for Option class such as opt("-o", "--opt") and opt[1]
 
-
-#define CLIXX_OPTION_OPERATORS
 
 
 class Option
 {
+public:
     friend class CLI;
 
+    enum class ParseMode {
+        SPACES,
+        EQUALS
+    };
+
+
+private:
     struct {
         std::string name;
         std::vector<Value> values;
@@ -26,12 +32,58 @@ class Option
 
     static bool Valid(const std::string& str);
     Option& pushValue(Value arg);
+    static Option Parse(int argc, char** argv, int& idx);
+
+    using PM = ParseMode;
+    PM mode = PM::SPACES;
 
 public:
     Option(const char* name, std::vector<Value> values, bool force_name = false);
 
     // Not intended for literal comparison, use `.is()` method instead
     const std::string& name() const;
+
+    // get the option's value count
+    usize count() const;
+
+    // get this option's values in a vector
+    auto values() const -> const std::vector<Value>&;
+
+    // get string value of every `Value` in this option
+    auto valuesAsStrings() const -> std::vector<std::string>;
+
+    // TODO: implement these, right now they will throw linker error
+    void setParseMode(ParseMode mode);
+    ParseMode parseMode();
+
+
+    // get the value of this option at `i`
+    template<bool bounds_check = true>
+    std::optional<Value> at(usize at) const {
+        if constexpr (bounds_check) {
+            if (at >= count()) {
+                return std::nullopt;
+            }
+        }
+
+        return m.values[at];
+    }
+
+    // get the value of this option at `i`
+    template<bool bounds_check = true>
+    std::optional<std::string> strAt(usize at) const {
+        if constexpr (bounds_check) {
+            if (at >= count()) {
+                return std::nullopt;
+            }
+        }
+
+        return m.values[at].val();
+    }
+
+    // get the represantion(pretty-formatted) string value of option
+    std::string repr() const;
+
 
     // Whether this option's name is equal to `str`
     bool is(const char* str) const;
@@ -69,45 +121,6 @@ public:
         return this->is(static_cast<T&&>(cstrings)...);
     }
 #endif
-
-
-    // get the value of this option at `i`
-    template<bool bounds_check = true>
-    std::optional<Value> at(usize at) const {
-        if constexpr (bounds_check) {
-            if (at >= count()) {
-                return std::nullopt;
-            }
-        }
-
-        return m.values[at];
-    }
-
-    // get the value of this option at `i`
-    template<bool bounds_check = true>
-    std::optional<std::string> strAt(usize at) const {
-        if constexpr (bounds_check) {
-            if (at >= count()) {
-                return std::nullopt;
-            }
-        }
-
-        return m.values[at].val();
-    }
-
-    // get this option's values in a vector
-    auto values() const -> const std::vector<Value>&;
-    // get string value of every `Value` in this option 
-    auto valuesAsStrings() const -> std::vector<std::string>;
-
-    // get the represantion(pretty-formatted) string value of option
-    std::string repr() const;
-
-    // get the option's value count
-    usize count() const;
-
-    // parse all options after `idx` at `argv` with the max length of `argc`
-    static Option Parse(int argc, char** argv, int& idx);
 };
 
 

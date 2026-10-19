@@ -17,6 +17,7 @@ TEST_MAIN(int argc, char** argv)
         }
     }
 
+
     std::println("{}", cli.repr());
     cli.printInfo();
 

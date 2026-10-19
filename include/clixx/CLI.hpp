@@ -25,13 +25,6 @@ class CLI
     } m;
 
 public:
-    class ParseResult {
-        bool m_result = true;
-    public:
-        explicit ParseResult(bool success);
-        bool failed();
-    };
-
     CLI(int argc, char** argv);
 
     void printInfo(bool values = true, bool options = true, bool orphans = true);
