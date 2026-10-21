@@ -1,6 +1,5 @@
 --- RULES/POLICIES
 add_rules("mode.debug", "mode.release")
-set_defaultmode("debug")
 add_rules("plugin.compile_commands.autoupdate")
 
 
@@ -12,8 +11,6 @@ add_rules("plugin.compile_commands.autoupdate")
         if has_config("pedantic") then
             add_cxxflags("-Wshadow", "-Wundef", "-Wcast-align", "-Wdouble-promotion")
         end
-    else
-        set_policy("build.optimization.lto", true)
     end
 --- SCRIPT-END
 
