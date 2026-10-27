@@ -3,7 +3,7 @@
 #include "core/utils.hpp"
 #include "Value.hpp"
 #include "Option.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 // CLIXX

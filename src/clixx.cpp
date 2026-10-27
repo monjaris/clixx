@@ -1,5 +1,5 @@
 #include "clixx/clixx.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 // CLIXX

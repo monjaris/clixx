@@ -4,5 +4,5 @@ namespace clixx {
     using namespace types;
 }
 
-#define CLIIXX_NAMESPACE_BEGIN() namespace clixx {
+#define CLIXX_NAMESPACE_BEGIN() namespace clixx {
 #define CLIXX_NAMESPACE_END() }

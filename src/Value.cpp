@@ -1,6 +1,6 @@
 #include <format>
 #include "clixx/Value.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 Value::Value(const char* value)
     : m_default(value), m_value(value)

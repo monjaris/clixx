@@ -3,7 +3,7 @@
 #include <optional>
 #include "core/utils.hpp"
 #include "Value.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 // For library to remain small, i added feature macros so devs can opt-in:
@@ -32,7 +32,7 @@ private:
 
     static bool Valid(const std::string& str);
     Option& pushValue(Value arg);
-    static Option Parse(int argc, char** argv, int& idx);
+    static Option Parse(usize argc, char** argv, usize& idx);
 
     using PM = ParseMode;
     PM mode = PM::SPACES;

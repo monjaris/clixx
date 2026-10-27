@@ -4,7 +4,7 @@
 #include "Value.hpp"
 #include "Option.hpp"
 #include "CLI.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 // exit with an error message and optionally custom exit code

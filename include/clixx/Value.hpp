@@ -1,7 +1,7 @@
 #pragma once
 #include "core/defines.hpp"
 #include <string>
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 class [[nodiscard]] Value

@@ -1,6 +1,6 @@
 #include <print>
 #include "clixx/CLI.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 
 
 CLI::CLI(usize argc, char** argv) {
@@ -46,7 +46,7 @@ const std::vector<Option>& CLI::options() const {
 
 
 bool CLI::parse() {
-    for (int i = 1; i < m.argc; ++i) {
+    for (usize i = 1; i < m.argc; ++i) {
         const char* const str = m.argv[i];
 
         if (Option::Valid(str)) {

@@ -1,6 +1,6 @@
 #pragma once
 #include "defines.hpp"
-CLIIXX_NAMESPACE_BEGIN()
+CLIXX_NAMESPACE_BEGIN()
 namespace util {
 
 
