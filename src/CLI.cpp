@@ -3,22 +3,34 @@
 CLIIXX_NAMESPACE_BEGIN()
 
 
+CLI::CLI(usize argc, char** argv) {
+    m.argc = static_cast<usize>(argc);
+    m.argv = argv;
+    m.options.reserve(64);
+    m.values.reserve(64);
+}
 
-// CLI implementation
+// argc is deliberatly promoted from int to size type
 CLI::CLI(int argc, char** argv) {
-    m.argc = argc;
+    m.argc = static_cast<usize>(argc);
     m.argv = argv;
     m.options.reserve(64);
     m.values.reserve(64);
 }
 
 
-int32 CLI::argc() const {
+
+usize CLI::argc() const {
     return m.argc;
 }
 
 
 const char* const* CLI::argv() const {
+    return m.argv;
+}
+
+// overload
+char** CLI::argv() {
     return m.argv;
 }
 

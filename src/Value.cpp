@@ -7,12 +7,12 @@ Value::Value(const char* value)
 {}
 
 
-const std::string& Value::val() const {
+const std::string& Value::str() const {
     return m_value;
 }
 
 
-const std::string& Value::defaultVal() const {
+const std::string& Value::initialVal() const {
     return m_value;
 }
 

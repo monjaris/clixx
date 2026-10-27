@@ -16,7 +16,7 @@ CLIIXX_NAMESPACE_BEGIN()
 class CLI
 {
     struct M {
-        int32 argc = -1;
+        usize argc = -1;
         char** argv = nullptr;
 
         std::vector<Value> values;
@@ -26,15 +26,17 @@ class CLI
 
 public:
     CLI(int argc, char** argv);
+    CLI(usize argc, char** argv);
 
     void printInfo(bool values = true, bool options = true, bool orphans = true);
 
-    int32 argc() const;
+    usize argc() const;
     const char* const* argv() const;
+    char** argv();
 
     const std::vector<Value>& values() const;
     const std::vector<Option>& options() const;
-    std::string repr() const;
+    [[nodiscard]] std::string repr() const;
 
     bool parse();
 };

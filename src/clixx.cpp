@@ -9,12 +9,12 @@ CLIIXX_NAMESPACE_BEGIN()
 
 
 
-void exitWith(const char* msg, int exit_code) {
+void printExit(const char* msg, int exit_code) {
     print(msg);
     ::exit(exit_code);
 }
 
-void abortWith(const char* msg) {
+void printAbort(const char* msg) {
     eprint(msg);
     ::abort();
 }

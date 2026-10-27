@@ -9,11 +9,11 @@ CLIIXX_NAMESPACE_BEGIN()
 
 // exit with an error message and optionally custom exit code
 [[maybe_unused, noreturn]]
-void exitWith(const char* msg, int exit_code = 0);
+void printExit(const char* msg, int exit_code = 0);
 
 // exit with an error message and optionally custom exit code
 [[maybe_unused, noreturn]]
-void abortWith(const char* msg);
+void printAbort(const char* msg);
 
 
 // write a message to `stdout` (unbuffered)

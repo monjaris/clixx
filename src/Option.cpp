@@ -67,7 +67,7 @@ auto Option::valuesAsStrings() const -> std::vector<std::string> {
     std::vector<std::string> value_strings;
     value_strings.reserve(m.values.size());
 
-    for (usize i=0;  i < m.values.size();  ++i) value_strings.push_back(m.values[i].val());
+    for (usize i=0;  i < m.values.size();  ++i) value_strings.push_back(m.values[i].str());
     return value_strings;
 }
 

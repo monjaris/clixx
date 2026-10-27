@@ -59,7 +59,7 @@ public:
 
     // get the value of this option at `i`
     template<bool bounds_check = true>
-    std::optional<Value> at(usize at) const {
+    std::optional<Value> get(usize at) const {
         if constexpr (bounds_check) {
             if (at >= count()) {
                 return std::nullopt;
@@ -71,14 +71,8 @@ public:
 
     // get the value of this option at `i`
     template<bool bounds_check = true>
-    std::optional<std::string> strAt(usize at) const {
-        if constexpr (bounds_check) {
-            if (at >= count()) {
-                return std::nullopt;
-            }
-        }
-
-        return m.values[at].val();
+    std::optional<std::string> getStr(usize at) const {
+        return this->get(at).value().str();
     }
 
     // get the represantion(pretty-formatted) string value of option
@@ -103,7 +97,7 @@ public:
 #if defined(CLIXX_OPTION_OPERATORS)
     // operator version of `.at()` method
     std::optional<Value> operator[] (usize at) {
-        return this->at(at);
+        return this->get<false>(at);
     }
 
     // operator version of `.is()` method

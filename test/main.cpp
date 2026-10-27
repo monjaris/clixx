@@ -7,7 +7,7 @@ TEST_MAIN(int argc, char** argv)
     clixx::CLI cli = {argc, argv};
 
     if (!cli.parse()) {
-        clixx::exitWith("Failed to parse command line");
+        clixx::printExit("Failed to parse command line");
     }
 
     for (const auto& opt : cli.options())

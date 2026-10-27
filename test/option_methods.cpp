@@ -15,7 +15,7 @@ TEST_MAIN()
         std::println("opt-name:      {}", option.name());
         std::println("repr-fmt:  {}", option.repr());
         std::println("arg-count: {}", option.count());
-        std::println("first-arg: {}", option.at(0)->val());
+        std::println("first-arg: {}", option.get(0)->str());
     }
     else
     {
