@@ -17,7 +17,7 @@ CLIXX_NAMESPACE_BEGIN()
 class Option
 {
 public:
-    friend class CLI;
+    friend class CmdLine;
 
     enum class ParseMode {
         SPACES,
