@@ -3,7 +3,7 @@
 #include "core/utils.hpp"
 #include "Value.hpp"
 #include "Option.hpp"
-#include "CLI.hpp"
+#include "CmdLine.hpp"
 CLIXX_NAMESPACE_BEGIN()
 
 

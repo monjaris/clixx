@@ -13,7 +13,7 @@ CLIXX_NAMESPACE_BEGIN()
 
 
 
-class CLI
+class CmdLine
 {
     struct M {
         usize argc = -1;
@@ -25,8 +25,8 @@ class CLI
     } m;
 
 public:
-    CLI(int argc, char** argv);
-    CLI(usize argc, char** argv);
+    CmdLine(int argc, char** argv);
+    CmdLine(usize argc, char** argv);
 
     void printInfo(bool values = true, bool options = true, bool orphans = true);
 

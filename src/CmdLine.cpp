@@ -3,7 +3,7 @@
 CLIXX_NAMESPACE_BEGIN()
 
 
-CLI::CLI(usize argc, char** argv) {
+CmdLine::CmdLine(usize argc, char** argv) {
     m.argc = static_cast<usize>(argc);
     m.argv = argv;
     m.options.reserve(64);
@@ -11,7 +11,7 @@ CLI::CLI(usize argc, char** argv) {
 }
 
 // argc is deliberatly promoted from int to size type
-CLI::CLI(int argc, char** argv) {
+CmdLine::CmdLine(int argc, char** argv) {
     m.argc = static_cast<usize>(argc);
     m.argv = argv;
     m.options.reserve(64);
@@ -20,32 +20,32 @@ CLI::CLI(int argc, char** argv) {
 
 
 
-usize CLI::argc() const {
+usize CmdLine::argc() const {
     return m.argc;
 }
 
 
-const char* const* CLI::argv() const {
+const char* const* CmdLine::argv() const {
     return m.argv;
 }
 
 // overload
-char** CLI::argv() {
+char** CmdLine::argv() {
     return m.argv;
 }
 
 
-const std::vector<Value>& CLI::values() const {
+const std::vector<Value>& CmdLine::values() const {
     return m.values;
 }
 
 
-const std::vector<Option>& CLI::options() const {
+const std::vector<Option>& CmdLine::options() const {
     return m.options;
 }
 
 
-bool CLI::parse() {
+bool CmdLine::parse() {
     for (usize i = 1; i < m.argc; ++i) {
         const char* const str = m.argv[i];
 
@@ -65,7 +65,7 @@ bool CLI::parse() {
 
 
 
-std::string CLI::repr() const {
+std::string CmdLine::repr() const {
     std::string repr;  repr.reserve(256);
 
     Option freestanding_values = {m.argv[0], m.values, true};
@@ -81,7 +81,7 @@ std::string CLI::repr() const {
 }
 
 
-void CLI::printInfo(bool values, bool options, bool orphans) {
+void CmdLine::printInfo(bool values, bool options, bool orphans) {
     std::println("\n\n----------- CLIXX CLI INFO -----------\n");
 
     auto longestNamedOption = [this]() {

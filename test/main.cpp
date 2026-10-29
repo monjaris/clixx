@@ -2,9 +2,10 @@
 #include "include/test.hpp"
 #include "clixx/clixx.hpp"
 
+
 TEST_MAIN(int argc, char** argv)
 {
-    clixx::CLI cli = {argc, argv};
+    clixx::CmdLine cli = {argc, argv};
 
     if (!cli.parse()) {
         clixx::printExit("Failed to parse command line");

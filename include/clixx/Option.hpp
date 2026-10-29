@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <optional>
+// #include "core/Nullable.hpp"
 #include "core/utils.hpp"
 #include "Value.hpp"
 CLIXX_NAMESPACE_BEGIN()
@@ -50,7 +51,7 @@ public:
     auto values() const -> const std::vector<Value>&;
 
     // get string value of every `Value` in this option
-    auto valuesAsStrings() const -> std::vector<std::string>;
+    auto valuesString() const -> std::vector<std::string>;
 
     // TODO: implement these, right now they will throw linker error
     void setParseMode(ParseMode mode);

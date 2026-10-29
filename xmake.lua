@@ -48,3 +48,4 @@ target("clixx")
 --- TESTS
 target("main") add_files("test/main.cpp") add_deps("clixx")
 target("option_methods") add_files("test/option_methods.cpp") add_deps("clixx")
+target("subcmd") add_files("test/subcmd.cpp") add_deps("clixx")

@@ -63,7 +63,7 @@ auto Option::values() const -> const std::vector<Value>& {
 }
 
 
-auto Option::valuesAsStrings() const -> std::vector<std::string> {
+auto Option::valuesString() const -> std::vector<std::string> {
     std::vector<std::string> value_strings;
     value_strings.reserve(m.values.size());
 
@@ -73,7 +73,7 @@ auto Option::valuesAsStrings() const -> std::vector<std::string> {
 
 
 std::string Option::repr() const {
-    return std::format("{} : {}", m.name, this->valuesAsStrings());
+    return std::format("{} : {}", m.name, this->valuesString());
 }
 
 
