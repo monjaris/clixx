@@ -1,5 +1,5 @@
 #include <print>
-#include "clixx/CLI.hpp"
+#include "clixx/CmdLine.hpp"
 CLIXX_NAMESPACE_BEGIN()
 
 
