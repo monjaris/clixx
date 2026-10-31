@@ -10,7 +10,7 @@
 NOTE: You need to have [xmake](https://xmake.io) to build clixx
 
 ```bash
-git clone https://github.com/monjaris/clixx
+git clone https://github.com/monjaris/clixx && cd clixx
 xmake
 ```
 
