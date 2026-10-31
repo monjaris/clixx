@@ -1,4 +1,4 @@
-#include "include/test.hpp"
+#include "include/test.h"
 #include "clixx/clixx.hpp"
 
 TEST_MAIN(int argc, char** argv)

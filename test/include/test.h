@@ -1,10 +1,6 @@
 #pragma once
-#include <cstdlib>
-
-extern "C" {
-    int printf(const char* fmt, ...);
-}
-
+#include <stdlib.h>
+#include <stdio.h>
 
 #define BODY($BODY) do { $BODY } while(false)
 #define EXPR($EXPR) ($EXPR)
