@@ -24,7 +24,7 @@ class CmdLine
         std::vector<std::string> orphans;
     } m;
 
-    bool m_parse();
+    void m_parse();
     CmdLine(nullptrT, int argc, char** argv);
 
 public:

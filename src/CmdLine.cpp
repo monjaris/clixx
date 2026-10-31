@@ -9,10 +9,12 @@ CmdLine::CmdLine(nullptrT, int argc, char** argv)
 {
     m.argc = argc;
     m.argv = argv;
+
     m.options.reserve(64);
     m.values.reserve(64);
-    assert(this->m_parse() == true);
+    this->m_parse();
 }
+
 
 // argc is converted to int type internally
 CmdLine::CmdLine(usize argc, char** argv)
@@ -24,7 +26,7 @@ CmdLine::CmdLine(int argc, char** argv)
 {}
 
 
-bool CmdLine::m_parse() {
+void CmdLine::m_parse() {
     for (usize i = 1; i < m.argc; ++i) {
         const char* const str = m.argv[i];
 
@@ -38,8 +40,6 @@ bool CmdLine::m_parse() {
             m.orphans.push_back(str);
         }
     }
-
-    return true;
 }
 
 
