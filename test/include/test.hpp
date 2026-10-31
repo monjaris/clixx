@@ -1,7 +1,7 @@
 #pragma once
+#include <cstdlib>
 
 extern "C" {
-    void exit(int exit_code);
     int printf(const char* fmt, ...);
 }
 
