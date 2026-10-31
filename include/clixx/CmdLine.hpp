@@ -24,6 +24,9 @@ class CmdLine
         std::vector<std::string> orphans;
     } m;
 
+    bool m_parse();
+    CmdLine(nullptrT, int argc, char** argv);
+
 public:
     CmdLine(int argc, char** argv);
     CmdLine(usize argc, char** argv);
@@ -37,8 +40,6 @@ public:
     const std::vector<Value>& values() const;
     const std::vector<Option>& options() const;
     [[nodiscard]] std::string repr() const;
-
-    bool parse();
 };
 
 

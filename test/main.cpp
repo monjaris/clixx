@@ -7,10 +7,6 @@ TEST_MAIN(int argc, char** argv)
 {
     clixx::CmdLine cli = {argc, argv};
 
-    if (!cli.parse()) {
-        clixx::printExit("Failed to parse command line");
-    }
-
     for (const auto& opt : cli.options())
     {
         if (opt.is("-o", "--option")) {

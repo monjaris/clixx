@@ -16,7 +16,7 @@ public:
     const std::string& str() const;
 
     // get the default string value(set at construction)
-    const std::string& initialVal() const;
+    const std::string& defaultValue() const;
 
     // generate string represantation of the value
     std::string repr(bool post_comma = false) const;

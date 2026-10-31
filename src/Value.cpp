@@ -12,7 +12,7 @@ const std::string& Value::str() const {
 }
 
 
-const std::string& Value::initialVal() const {
+const std::string& Value::defaultValue() const {
     return m_value;
 }
 

@@ -1,23 +1,46 @@
+#include <cassert>
 #include <print>
 #include "clixx/CmdLine.hpp"
 CLIXX_NAMESPACE_BEGIN()
 
 
-CmdLine::CmdLine(usize argc, char** argv) {
-    m.argc = static_cast<usize>(argc);
+// private constructor used by public constructors as base construction method
+CmdLine::CmdLine(nullptrT, int argc, char** argv)
+{
+    m.argc = argc;
     m.argv = argv;
     m.options.reserve(64);
     m.values.reserve(64);
+    assert(this->m_parse() == true);
 }
 
-// argc is deliberatly promoted from int to size type
-CmdLine::CmdLine(int argc, char** argv) {
-    m.argc = static_cast<usize>(argc);
-    m.argv = argv;
-    m.options.reserve(64);
-    m.values.reserve(64);
-}
+// argc is converted to int type internally
+CmdLine::CmdLine(usize argc, char** argv)
+    : CmdLine(nullptr, argc, argv)
+{}
 
+CmdLine::CmdLine(int argc, char** argv)
+    : CmdLine(nullptr, argc, argv)
+{}
+
+
+bool CmdLine::m_parse() {
+    for (usize i = 1; i < m.argc; ++i) {
+        const char* const str = m.argv[i];
+
+        if (Option::Valid(str)) {
+            m.options.push_back(Option::Parse(m.argc, m.argv, i));
+        }
+        else if (true) {
+            m.values.push_back(Value(str));
+        }
+        else {
+            m.orphans.push_back(str);
+        }
+    }
+
+    return true;
+}
 
 
 usize CmdLine::argc() const {
@@ -42,25 +65,6 @@ const std::vector<Value>& CmdLine::values() const {
 
 const std::vector<Option>& CmdLine::options() const {
     return m.options;
-}
-
-
-bool CmdLine::parse() {
-    for (usize i = 1; i < m.argc; ++i) {
-        const char* const str = m.argv[i];
-
-        if (Option::Valid(str)) {
-            m.options.push_back(Option::Parse(m.argc, m.argv, i));
-        }
-        else if (true) {
-            m.values.push_back(Value(str));
-        }
-        else {
-            m.orphans.push_back(str);
-        }
-    }
-
-    return true;
 }
 
 
