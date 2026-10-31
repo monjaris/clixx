@@ -1,4 +1,4 @@
-# clixx - lightweight command-line parsing library in C++
+# clixx - Simple command-line parsing library
 
 - no exceptions, no rtti
 - statically compiled
