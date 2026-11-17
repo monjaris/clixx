@@ -8,11 +8,11 @@ TEST_MAIN(int argc, char** argv)
     clixx::CmdLine cmdl = {argc, argv};
 
     if (cmdl.argc() > 1) {
-        clixx::CmdLine sc_run = {argc - 1, argv + 1};
-        std::println("{}", sc_run.repr());
+        clixx::CmdLine subcmd = {argc - 1, argv + 1};
+        std::println("{}", subcmd.repr());
     }
     else {
-        std::println("{}: pass 'run' to see subcommand metadata", cmdl.argv()[0]);
+        std::println("{}: argc should be more than 1 to process subcommands", cmdl.argv()[0]);
     }
 
     TEST_QUIT(TEST_QUIT_OK);
